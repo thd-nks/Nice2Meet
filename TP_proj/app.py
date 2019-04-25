@@ -1,5 +1,6 @@
 from flask import Flask
 import chat
+from authorization import Authorization
 
 app = Flask(__name__)
 
