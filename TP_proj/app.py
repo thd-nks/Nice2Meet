@@ -1,6 +1,8 @@
 from flask import Flask
+import chat
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def hello():
