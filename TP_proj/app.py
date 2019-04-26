@@ -1,6 +1,7 @@
 from flask import Flask
-import chat
+from chat import Chat
 from authorization import Authorization
+from request_handler import RequestHandler
 
 app = Flask(__name__)
 
