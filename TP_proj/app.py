@@ -1,4 +1,5 @@
 from flask import Flask
+from queue_service import QueueService
 from chat import Chat
 from registration import Registration
 from authorization import Authorization
