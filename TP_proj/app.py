@@ -1,5 +1,6 @@
 from flask import Flask
 from chat import Chat
+from registration import Registration
 from authorization import Authorization
 from request_handler import RequestHandler
 from reviewed_users import ReviewedUsers
