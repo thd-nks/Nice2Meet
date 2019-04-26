@@ -4,6 +4,7 @@ from registration import Registration
 from authorization import Authorization
 from request_handler import RequestHandler
 from reviewed_users import ReviewedUsers
+from profile_service import ProfileService
 
 app = Flask(__name__)
 
