@@ -4,7 +4,7 @@ db = MySQLDatabase('nicemeet', user='root', password='root', host='localhost')
 
 
 class User(Model):
-    id = IntegerField(primary_key=True)
+    id = AutoField(primary_key=True)
     name = TextField()
     sex = BooleanField()
     age = IntegerField()
@@ -21,7 +21,7 @@ class User(Model):
 
 
 class Chat(Model):
-    idchat = IntegerField(primary_key=True)
+    idchat = AutoField(primary_key=True)
     id1 = ForeignKeyField(User, backref='user')
     id2 = ForeignKeyField(User, backref='user')
 
