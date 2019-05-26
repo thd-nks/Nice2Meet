@@ -77,4 +77,4 @@ class ViewedUser(Model):
 
 if __name__ == '__main__':
     db.connect()
-    db.create_tables([User, Chat, Message, Comment, LikedUser])
+    db.create_tables([User, Chat, Message, Comment, LikedUser, ViewedUser])
