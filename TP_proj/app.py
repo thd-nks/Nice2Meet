@@ -9,6 +9,16 @@ from reviewed_users import ReviewedUsers
 from profile_service import ProfileService
 from info_user_service import InfoUserService
 
+db = DB()
+queue_service = QueueService()
+register = Registration()
+auth = Authorization()
+request = RequestHandler()
+reviewed = ReviewedUsers()
+profile = ProfileService()
+inform = InfoUserService()
+
+
 app = Flask(__name__)
 app.config.from_object('config')
 
