@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+
+Регистрация
+
+{% endblock %}
+
+{% block body %}
+
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>{{ form.login(size=28, placeholder='Логин') }}
+    {% for error in form.login.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+    </p>
+    <p>{{ form.password(size=28, placeholder='Пароль') }}</p>
+    <p>{{ form.name(size=28, placeholder='Имя') }}</p>
+    <p>{{ form.surname(size=28, placeholder='Фамилия') }}</p>
+    <p>{% for subfield in form.sex %}
+    <tr>
+        <td>{{ subfield }}</td>
+        <td>{{ subfield.label }}</td>
+    </tr>
+{% endfor %}</p>
+    <p>{{ form.submit() }}</p>
+</form>
+
+{% endblock %}
