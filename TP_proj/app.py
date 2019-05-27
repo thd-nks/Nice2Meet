@@ -10,11 +10,10 @@ from profile_service import ProfileService
 from info_user_service import InfoUserService
 
 app = Flask(__name__)
+app.config.from_object('config')
 
 
-@app.route("/")
-def hello():
-    return "Nice to meet you!"
+from routes import *
 
 
 if __name__ == '__main__':
