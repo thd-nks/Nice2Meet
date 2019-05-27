@@ -1,6 +1,7 @@
 from reviewed_users import ReviewedUsers
 from models import *
 from db_service import DB
+from flask import jsonify
 
 db = DB()
 
@@ -11,12 +12,34 @@ class QueueService:
         pass
 
     def form_queue(self, id_user):
-        #User.create(name="Никита", sex=True, age=24, rating=0, location='', info='student', picture='', login='sasa', password='sa')
-        self.queue = db.get_couples(id_user)
-        [print(sel) for sel in self.queue]
-        return self.queue
+        self.queue = []
+        #User.create(name="dasha", sex=False, age=23, rating=0, location='', info='student', picture='', login='asa', password='sa')
+        couples = db.get_couples(id_user)
+        [self.queue.append(sel) for sel in couples]
+        #[print(sel) for sel in couples]
+
+    def likes_queue(self, id_user):
+        self.queue = []
+        likes = db.get_likes(id_user)
+        [self.queue.append(sel) for sel in likes]
+
+    def get_from_queue(self):
+        if len(self.queue) != 0:
+            return self.jsonify_user(self.queue.pop())
+        return jsonify(id=0)
+
+    def jsonify_user(self, id_user):
+        user = db.get_user(id_user)
+        return jsonify(id=user.id,
+                       name=user.name,
+                       sex=user.sex,
+                       age=user.age,
+                       rating=user.rating,
+                       location=user.location,
+                       info=user.login)
 
 
 if __name__ == '__main__':
     service = QueueService()
-    service.form_queue(1)
+    service.form_queue(3)
+    service.get_from_queue()
