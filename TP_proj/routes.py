@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from app import app
-from authorization import LogForm
+from authorization import LogForm, Authorization
 from registration import RegForm
 from flask_login import current_user, login_user, logout_user
 from models import User
@@ -31,7 +31,8 @@ def log():
     form = LogForm()
     if form.validate_on_submit():
         user = User.get(User.login == form.login.data)
-        if user is None or not user.check_password(form.password.data):
+        auth = Authorization()
+        if user is None or not auth.check_password(user, form.password.data):
             return redirect(url_for('log'))
         login_user(user)
         return redirect(url_for('main_page'))

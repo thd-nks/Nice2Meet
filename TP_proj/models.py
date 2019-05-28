@@ -1,7 +1,5 @@
 from peewee import *
 from flask_login import UserMixin
-from app import login
-from werkzeug.security import generate_password_hash, check_password_hash
 
 db = MySQLDatabase('nicemeet', user='root', password='root', host='localhost')
 
@@ -21,17 +19,6 @@ class User(UserMixin, Model):
     class Meta:
         db_table = 'user'
         database = db
-
-    def set_password(self, password):
-        self.password = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password, password)
-
-
-@login.user_loader
-def load_user(id):
-    return User.get(User.id == int(id))
 
 
 class Chat(Model):
@@ -89,10 +76,14 @@ class ViewedUser(Model):
         primary_key = CompositeKey('idviewer', 'idviewed')
 
 
+
 if __name__ == '__main__':
     #db.connect()
     #db.create_tables([User, Chat, Message, Comment, LikedUser, ViewedUser])
-    p = 'root'
-    user = User(name="root", sex=True, age=23, rating=0, location='', info='student', picture='', login='asa')
-    user.set_password(p)
+
+    from authorization import Authorization
+    auth = Authorization()
+    p = 'l'
+    user = User(name="Сергей", sex=True, age=23, rating=0, location='', info='student', picture='', login='l')
+    auth.set_password(user, p)
     user.save()
