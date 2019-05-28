@@ -1,9 +1,10 @@
 from peewee import *
+from flask_login import UserMixin
 
 db = MySQLDatabase('nicemeet', user='root', password='root', host='localhost')
 
 
-class User(Model):
+class User(UserMixin, Model):
     id = AutoField(primary_key=True)
     name = TextField()
     sex = BooleanField()
@@ -75,6 +76,14 @@ class ViewedUser(Model):
         primary_key = CompositeKey('idviewer', 'idviewed')
 
 
+
 if __name__ == '__main__':
-    db.connect()
-    db.create_tables([User, Chat, Message, Comment, LikedUser, ViewedUser])
+    #db.connect()
+    #db.create_tables([User, Chat, Message, Comment, LikedUser, ViewedUser])
+
+    from authorization import Authorization
+    auth = Authorization()
+    p = 'l'
+    user = User(name="Сергей", sex=True, age=23, rating=0, location='', info='student', picture='', login='l')
+    auth.set_password(user, p)
+    user.save()
