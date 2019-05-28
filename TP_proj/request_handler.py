@@ -1,4 +1,6 @@
-from app import reviewed, inform, queue_service
+from reviewed_users import reviewed
+from info_user_service import inform
+from queue_service import queue_service
 
 
 class RequestHandler:
@@ -11,3 +13,5 @@ class RequestHandler:
             inform.add_to_liked(id_viewer, id_viewed)
         return queue_service.get_from_queue()
 
+
+request = RequestHandler()

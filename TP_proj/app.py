@@ -1,22 +1,4 @@
 from flask import Flask
-from db_service import DB
-from queue_service import QueueService
-from chat import Chat
-from registration import Registration
-from authorization import Authorization
-from request_handler import RequestHandler
-from reviewed_users import ReviewedUsers
-from profile_service import ProfileService
-from info_user_service import InfoUserService
-
-db = DB()
-queue_service = QueueService()
-register = Registration()
-auth = Authorization()
-request = RequestHandler()
-reviewed = ReviewedUsers()
-profile = ProfileService()
-inform = InfoUserService()
 
 
 app = Flask(__name__)

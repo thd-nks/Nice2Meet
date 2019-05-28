@@ -13,3 +13,5 @@ class LogForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     submit = SubmitField('Войти')
 
+
+auth = Authorization()

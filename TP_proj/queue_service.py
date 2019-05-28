@@ -1,9 +1,5 @@
-from reviewed_users import ReviewedUsers
-from models import *
-from db_service import DB
+from db_service import db
 from flask import jsonify
-
-db = DB()
 
 
 class QueueService:
@@ -37,6 +33,9 @@ class QueueService:
                        rating=user.rating,
                        location=user.location,
                        info=user.login)
+
+
+queue_service = QueueService()
 
 
 if __name__ == '__main__':

@@ -4,3 +4,6 @@ class InfoUserService:
 
     def add_to_liked(self, id):
         pass
+
+
+inform = InfoUserService()

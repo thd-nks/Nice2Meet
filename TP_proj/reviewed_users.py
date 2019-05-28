@@ -1,4 +1,4 @@
-from app import db
+from db_service import db
 
 
 class ReviewedUsers:
@@ -10,3 +10,6 @@ class ReviewedUsers:
 
     def set_viewed(self, id_viewer, id_viewed):
         db.add_viewed(id_viewer, id_viewed)
+
+
+reviewed = ReviewedUsers()

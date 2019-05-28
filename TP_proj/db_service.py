@@ -27,3 +27,6 @@ class DB:
 
     def get_chat(self, id1, id2):
         pass
+
+
+db = DB()

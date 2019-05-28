@@ -15,3 +15,6 @@ class RegForm(FlaskForm):
     surname = StringField('Фамилия', validators=[DataRequired()])
     sex = RadioField('Пол', choices=[('man', 'Мужской'), ('woman', 'Женский')])
     submit = SubmitField('Зарегистрироваться')
+
+
+register = Registration()
