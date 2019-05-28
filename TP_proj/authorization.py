@@ -2,16 +2,13 @@ from flask_wtf import FlaskForm
 from wtforms import *
 from wtforms.validators import DataRequired
 from app import login
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 from models import User
 
 
 class Authorization:
     def __init__(self):
         pass
-
-    def set_password(self, user, password):
-            user.password = generate_password_hash(password)
 
     def check_password(self, user, password):
             return check_password_hash(user.password, password)
