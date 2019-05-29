@@ -1,15 +1,91 @@
 {% extends "layout.html" %}
 
 {% block heading %}
-
-Главная страница
-
 {% endblock %}
 
 {% block body %}
+<style type="text/css">
+   #profilebutton {
+    float: right;
+    position:static;
+    }
 
-<h1>Hi, {{ current_user.name }}!</h1>
+   #logoutbutton {
+    float: right;
+    position:static;
+    }
 
-<p><a href="{{ url_for('logout') }}">Выйти</a></p>
+   #chbutt {
+    float: left;
+    position:static;
+    }
+
+   TABLE {
+    width: 100%; /* Ширина таблицы */
+    height: 100%;
+   }
+   TD {
+    vertical-align: top; /* Выравнивание по верхнему краю ячейки */
+   }
+   #col1 {
+    width: 200px; /* Ширина первой колонки */
+    background: red; /* Цвет фона первой колонки */
+   }
+   #col2 {
+   }
+   #col3 {
+    width: 200px; /* Ширина третьей колонки */
+    background: green; /* Цвет фона третьей колонки */
+   }
+   #col01 {
+    width: 200px; /* Ширина первой колонки */
+    background: white; /* Цвет фона первой колонки */
+   }
+</style>
+
+
+<table cellpadding="5" cellspacing="0">
+  <tr>
+   <td id="col01"></td>
+   <td id="col2">
+
+       <p>Hi, {{ current_user.name }}!</p>
+
+           <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            {{ form.location.label }}
+            {{ form.location(value=current_user.location, size=28, placeholder='Введите местоположение') }}
+            {{ form.submit() }}
+               {% for error in form.location.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            </form>
+
+
+       <p>
+           <a href="/reg"><button id="chbutt">Чаты</button></a>
+           <a href="/reg"><button>Оценившие</button></a>
+           <a href="{{ url_for('logout') }}"><button id="logoutbutton">Выйти</button></a>
+           <a href="/reg"><button id="profilebutton">Мой профиль</button></a>
+       </p>
+
+        <!-- Внутренняя таблица -->
+        <table cellpadding="5" cellspacing="0">
+        <tr>
+        <td id="col1">Внутренняя Колонка 1</td>
+        <td id="col2">
+            <!-- Колонка для профиля пользователя -->
+            <p>Some text</p>
+            <p>Some text</p>
+        </td>
+        <td id="col3">Внутренняя Колонка 3</td>
+        </tr>
+        </table>
+
+
+   </td>
+   <td id="col01"></td>
+  </tr>
+  </table>
 
 {% endblock %}

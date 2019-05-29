@@ -16,6 +16,17 @@ class DB:
                                           User.location == user.location,
                                           User.id.not_in(viewed))
 
+    def get_user_by_login(self, login):
+        try:
+            return User.get(User.login == login)
+        except User.DoesNotExist:
+            return None
+
+    def update_location(self, id, new_location):
+        user = User.get(User.id == id)
+        user.location = new_location
+        user.save()
+
     def get_likes(self, id_user):
         return LikedUser.select(LikedUser.idliker).where(LikedUser.idliked == id_user)
 

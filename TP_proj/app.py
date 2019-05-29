@@ -5,6 +5,7 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 login = LoginManager(app)
+login.login_view = 'index'
 
 from routes import *
 

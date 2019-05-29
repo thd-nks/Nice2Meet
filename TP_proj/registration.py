@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import *
-from wtforms.validators import DataRequired, EqualTo, Required
-from models import User
+from wtforms.validators import DataRequired, EqualTo
 from werkzeug.security import generate_password_hash
+from db_service import db
 
 
 class Registration:
@@ -23,10 +23,9 @@ class RegForm(FlaskForm):
     submit = SubmitField('Зарегистрироваться')
 
     def validate_login(self, login):
-        try:
-            User.get(User.login == login.data)
+        if db.get_user_by_login(login.data) is not None:
             raise ValidationError('Login is busy.')
-        except User.DoesNotExist:
+        else:
             pass
 
 
