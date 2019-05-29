@@ -16,6 +16,12 @@ class DB:
                                           User.location == user.location,
                                           User.id.not_in(viewed))
 
+    def get_user_by_login(self, login):
+        try:
+            return User.get(User.login == login)
+        except User.DoesNotExist:
+            return None
+
     def get_likes(self, id_user):
         return LikedUser.select(LikedUser.idliker).where(LikedUser.idliked == id_user)
 
