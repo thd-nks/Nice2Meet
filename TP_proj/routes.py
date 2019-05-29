@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for
 from app import app
 from authorization import LogForm, Authorization
 from registration import RegForm, Registration
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from models import User
 
 
@@ -32,7 +32,11 @@ def log():
         return redirect(url_for('main_page'))
     form = LogForm()
     if form.validate_on_submit():
-        user = User.get(User.login == form.login.data)
+        user = None
+        try:
+            user = User.get(User.login == form.login.data)
+        except User.DoesNotExist:
+            pass
         auth = Authorization()
         if user is None or not auth.check_password(user, form.password.data):
             return redirect(url_for('log'))
@@ -42,6 +46,7 @@ def log():
 
 
 @app.route("/mainPage", methods=['GET', 'POST'])
+@login_required
 def main_page():
     return render_template('mainPage.html')
 

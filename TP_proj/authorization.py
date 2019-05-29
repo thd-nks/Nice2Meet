@@ -3,7 +3,7 @@ from wtforms import *
 from wtforms.validators import DataRequired
 from app import login
 from werkzeug.security import check_password_hash
-from models import User
+from db_service import db
 
 
 class Authorization:
@@ -16,7 +16,8 @@ class Authorization:
 
 @login.user_loader
 def load_user(id):
-    return User.get(User.id == int(id))
+    return db.get_user(id)
+    #return User.get(User.id == int(id))
 
 
 class LogForm(FlaskForm):
