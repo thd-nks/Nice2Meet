@@ -1,10 +1,226 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "layout.html" %}
+
+{% block heading %}
+Chat
+{% endblock%}
+
+{% block body %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"> </script>
+<script>let divs =  $("div[id]");
+let offset = 0;
+let amountChats = 0;
+
+    $(document).ready(function(){
+             $('#moveMsgUp').click(function () {
+                 let divs =  $("div[id]");
+                 if (offset-6>=0) {
+                     divs.get(offset-6).style.display = "block";
+                     divs.get(offset-1).style.display = "none";
+                     offset -=1;
+                     console.log(offset);
+                 }
+            });
+          });
+
+    $(document).ready(function(){
+             $('#moveMsgDown').click(function () {
+                 let divs =  $("div[id]");
+                 if (offset+1<=divs.length) {
+                     divs.get(offset).style.display = "block";
+                     divs.get(offset-5).style.display = "none";
+                     offset +=1;
+                     console.log(offset);
+                 }
+            });
+          });
+
+    $(document).ready(function(){
+             $('#moveUsersDown').click(function () {
+                 let divs =  $(".chatuser");
+                 if (amountChats+1<=divs.length) {
+                     divs.get(amountChats-8).style.display = "none";
+                     divs.get(amountChats).style.display = "block";
+                     amountChats +=1;
+                     console.log(amountChats);
+                 }
+            });
+          });
+
+    $(document).ready(function(){
+             $('#moveUsersUp').click(function () {
+                 let divs =  $(".chatuser");
+                 if (amountChats-8>0) {
+                     divs.get(amountChats-1).style.display = "none";
+                     divs.get(amountChats-9).style.display = "block";
+                     amountChats -=1;
+                     console.log(amountChats);
+                 }
+            });
+          });
+
+
+    $(document).ready(function(){
+      offset = $( "div[id]" ).length;
+      amountChats = $(".chatuser").length;
+      console.log($(".chatuser").length);
+      for(let i = offset-1; i>offset-6;i--){
+          $( "div[id]" ).get(i).style.display = "block";
+      }
+      for(let i=amountChats-1; i>amountChats-9 && i >= 0; i--){
+              $(".chatuser").get(i).style.display = "inline-block";
+          }
+    });
+
+    /*
+			<div id="4" class="container darker">
+				<p>Хорошо.<br>А у тебя?</p>
+			</div>
+			<div id="5" class="container">
+				<p>Тоже хорошо!</p>
+			</div>
+            <div id="6" class="container darker">
+				<p>Супер!</p>
+			</div>
+            <div id="7" class="container">
+				<p>Пупер!</p>
+			</div>
+            <div id="8" class="container darker">
+				<p>Дупер!</p>
+			</div>*/
+
+</script>
+
+
+<style type="text/css">
+    /* Chat containers */
+.container {
+    bottom:10px;
+    position: relative;
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  width: 350px;
+    display: none;
+}
+
+/* Darker chat container */
+.darker {
+  margin-left: 50%;
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.darker p{
+  float: right;
+}
+
+/* Clear floats */
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Style images */
+.container img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+/* Style the right image */
+.container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+/* Style time text */
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+/* Style time text */
+.time-left {
+  float: bottom;
+  float: left;
+  color: #999;
+}
+.chatcontainer{
+  /*max-height: 415px;*/
+  height: 415px;
+  border-radius: 5px;
+}
+.chatuser{
+  display:none;
+  border: 1px solid black;
+  height: 50px;
+  width: 100%;
+    border-collapse:collapse;
+    margin-left: -1px;
+
+}
+  </style>
+
+	<form>
+
+<table border="1" rules="all" cellspacing="0" width="50%" height="100%">
+	<tr>
+    	<td colspan="3" width="100%" height="45px"><button>Назад</button></td>
+  	</tr>
+
+	<tr>
+		<td width="80">
+            <input id="moveUsersUp" type="button" name="up" value="Вверх" width="300" height="25" >
+			<div class="chatcontainer">
+
+                    <div class="chatuser">1</div>
+                    <div class="chatuser">2</div>
+                    <div class="chatuser">3</div>
+                    <div class="chatuser">4</div>
+                    <div class="chatuser">5</div>
+                    <div class="chatuser">6</div>
+                    <div class="chatuser">7</div>
+                    <div class="chatuser">8</div>
+                    <div class="chatuser">9</div>
+                    <div class="chatuser">10</div>
+
+			</div>
+             <input id="moveUsersDown" type="button" name="up" value="Вниз" width="300" height="25" >
+		</td>
+
+		<td height="350">
+			<input id="moveMsgUp" type="button" name="up" value="Вверх" width="300" height="25" style="position: fixed; top: 131px;">
+            <div id="msgHolder">
+                <div id="0" class="container darker">
+                    <p>Кайф!</p>
+                </div>
+                <div id="1" class="container" >
+                    <p>Привет!</p>
+                </div>
+                <div id="2" class="container darker">
+                    <p>Привет!</p>
+                </div>
+                <div id="3" class="container">
+                    <p>Как дела?</p>
+                </div>
+            </div>
+			<input id="moveMsgDown" type="button" name="down" value="Вниз" width="300" height="25" style="position: fixed; top:568px; ">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2"><p><input id="sendMsg" type="text" size="60" name=""><p><input type="submit" value="Отправить"></td>
+	</tr>
+
+</table>
+	</form>
+
+
+{% endblock %}
+

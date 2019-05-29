@@ -11,6 +11,10 @@ def index():
     return render_template('index.html')
 
 
+@app.route("/test")
+def call():
+    return render_template('chat.html')
+
 @app.route("/reg", methods=['GET', 'POST'])
 def reg():
     if current_user.is_authenticated:
