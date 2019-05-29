@@ -22,6 +22,11 @@ class DB:
         except User.DoesNotExist:
             return None
 
+    def update_location(self, id, new_location):
+        user = User.get(User.id == id)
+        user.location = new_location
+        user.save()
+
     def get_likes(self, id_user):
         return LikedUser.select(LikedUser.idliker).where(LikedUser.idliked == id_user)
 

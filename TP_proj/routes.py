@@ -2,8 +2,10 @@ from flask import render_template, request, redirect, url_for
 from app import app
 from authorization import LogForm, Authorization
 from registration import RegForm, Registration
+from profile_service import LocationForm
 from flask_login import current_user, login_user, logout_user, login_required
 from models import User
+from db_service import db
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -48,7 +50,11 @@ def log():
 @app.route("/mainPage", methods=['GET', 'POST'])
 @login_required
 def main_page():
-    return render_template('mainPage.html')
+    form = LocationForm()
+    if form.validate_on_submit():
+        db.update_location(current_user.id, form.location.data)
+        return redirect(url_for('main_page'))
+    return render_template('mainPage.html', form=form)
 
 
 @app.route('/logout')
