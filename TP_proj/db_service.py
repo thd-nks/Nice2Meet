@@ -19,14 +19,13 @@ class DB:
     def get_likes(self, id_user):
         return LikedUser.select(LikedUser.idliker).where(LikedUser.idliked == id_user)
 
+    def get_chat(self, id_user, id_talk):
+        return Chat.select().where(Chat.id1 == id_user & Chat.id2 == id_talk | Chat.id2 == id_user & Chat.id1 == id_talk)
+
     def add_viewed(self, id_viewer, id_viewed):
         ViewedUser.create(idviewer=id_viewer, idviewed=id_viewed)
 
     def update_user(self, id):
         pass
-
-    def get_chat(self, id1, id2):
-        pass
-
 
 db = DB()
