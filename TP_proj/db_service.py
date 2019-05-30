@@ -37,13 +37,26 @@ class DB:
     def get_likes(self, id_user):
         return LikedUser.select(LikedUser.idliker).where(LikedUser.idliked == id_user)
 
+    def get_chat(self, id_user, id_talk):
+        return Chat.select(Chat.idchat).where(( (Chat.id1 == id_user) & (Chat.id2 == id_talk)) |
+                                              ((Chat.id2 == id_user) & (Chat.id1 == id_talk)))
+
+    def get_messages(self, id_chat, id_user, id_talk):
+        return Message.select(Message.idsender, Message.date, Message.text).where(
+                              Message.idchat == id_chat,
+                              (Message.idsender == id_user) |
+                              (Message.idsender == id_talk)).order_by(Message.date)
+
     def add_viewed(self, id_viewer, id_viewed):
         ViewedUser.create(idviewer=id_viewer, idviewed=id_viewed)
 
-    def update_user(self, id):
-        pass
+    def get_talk(self, id_user):
+        return Chat.select(Chat.id1, Chat.id2).where((Chat.id1 == id_user) | (Chat.id2 == id_user))
 
-    def get_chat(self, id1, id2):
+    def get_name(self, id):
+        return User.get(User.id == id).name
+
+    def update_user(self, id):
         pass
 
 
