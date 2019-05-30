@@ -13,4 +13,11 @@ class LocationForm(FlaskForm):
     submit = SubmitField('Изменить')
 
 
+class ProfileForm(FlaskForm):
+    name = StringField('Имя', validators=[DataRequired()])
+    age = IntegerField('Возраст', validators=[DataRequired()])
+    info = StringField('Информация')
+    submit = SubmitField('Изменить')
+
+
 profile = ProfileService()

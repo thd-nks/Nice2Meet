@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for
 from app import app
 from authorization import LogForm, Authorization
 from registration import RegForm, Registration
-from profile_service import LocationForm
+from profile_service import LocationForm, ProfileForm
 from flask_login import current_user, login_user, logout_user, login_required
 from models import User
 from db_service import db
@@ -55,6 +55,15 @@ def main_page():
         db.update_location(current_user.id, form.location.data)
         return redirect(url_for('main_page'))
     return render_template('mainPage.html', form=form)
+
+
+@app.route("/profile", methods=['GET', 'POST'])
+def profile():
+    form = ProfileForm()
+    if form.validate_on_submit():
+        db.update_profile(current_user.id, form.name.data, form.age.data, form.info.data)
+        return redirect(url_for('main_page'))
+    return render_template('profile.html', form=form)
 
 
 @app.route('/logout')

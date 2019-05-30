@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+
+{% endblock %}
+
+{% block body %}
+<style type="text/css">
+   TABLE {
+    width: 100%; /* Ширина таблицы */
+    height: 100%;
+   }
+   TD {
+    vertical-align: top; /* Выравнивание по верхнему краю ячейки */
+   }
+   #col1 {
+    width: 35%; /* Ширина первой колонки */
+    background: white; /* Цвет фона первой колонки */
+   }
+   #col2 {
+   }
+   #col3 {
+    width: 35%; /* Ширина третьей колонки */
+    background: white; /* Цвет фона третьей колонки */
+   }
+</style>
+
+
+<table cellpadding="5" cellspacing="0">
+    <tr>
+        <td id="col1"></td>
+        <td id="col2">
+
+            <p><a href="/mainPage"><button>Назад</button></a></p>
+            <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <table border="1" cellpadding="5" cellspacing="0">
+                <tr>
+  	                <td>
+     	                <table border="0" cellpadding="5" cellspacing="0">
+                            <tr>
+                                <td align="center">ФОТО</td>
+                                <td>
+                                    <table border="1" cellpadding="5" cellspacing="0">
+                                        <tr><td align="center">
+                                            {{ form.name(value=current_user.name, placeholder='Имя')}}
+                                            {% for error in form.name.errors %}
+                                                <span style="color: red;">[{{ error }}]</span>
+                                            {% endfor %}
+                                        </td></tr>
+                                        <tr><td align="center">
+                                            {% if current_user.sex %}
+                                            Мужчина
+                                            {% endif %}
+                                            {% if current_user.sex == False %}
+                                            Женщина
+                                            {% endif %}
+                                        </td></tr>
+                                        <tr><td align="center">
+                                            {{ form.age(value=current_user.age, placeholder='Возраст') }}
+                                            {% for error in form.age.errors %}
+                                                <span style="color: red;">[{{ error }}]</span>
+                                            {% endfor %}
+                                        </td></tr>
+                                    </table>
+                                </td>
+                            </tr>
+      	                </table>
+                    </td>
+                </tr>
+                <tr>
+  	                <td height="200">
+                        {{ form.info(value=current_user.info, size=50, placeholder='Введите информацию о себе') }}
+                    </td>
+                </tr>
+            </table>
+                <p align="center">{{ form.submit() }}</p>
+            </form>
+
+
+
+
+        </td>
+        <td id="col3"></td>
+    </tr>
+</table>
+
+{% endblock %}
