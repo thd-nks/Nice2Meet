@@ -1,11 +1,12 @@
 from flask import render_template, request, redirect, url_for
-from app import app
+from app import app, socketio
 from authorization import LogForm, Authorization
 from registration import RegForm, Registration
 from profile_service import LocationForm
 from flask_login import current_user, login_user, logout_user, login_required
 from models import User
 from db_service import db
+from chat import ch
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -13,9 +14,12 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/test")
+@app.route("/test", methods=['GET', 'POST'])
 def call():
-    return render_template('chat.html')
+    msg = ch.get_messages(1, 5)
+    tlk = ch.get_talks(5)
+    return render_template('chat.html', messages=msg, talks=tlk, id_user='5', id_talk='1')
+
 
 @app.route("/reg", methods=['GET', 'POST'])
 def reg():

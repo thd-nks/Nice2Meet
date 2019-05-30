@@ -7,7 +7,7 @@ Chat
 {% block body %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"> </script>
-<script>let divs =  $("div[id]");
+<script>
 let offset = 0;
 let amountChats = 0;
 
@@ -87,7 +87,20 @@ let amountChats = 0;
 			</div>
             <div id="8" class="container darker">
 				<p>Дупер!</p>
-			</div>*/
+			</div>
+			<div id="0" class="container darker">
+                    <p>Кайф!</p>
+                </div>
+                <div id="1" class="container" >
+                    <p>Привет!</p>
+                </div>
+                <div id="2" class="container darker">
+                    <p>Привет!</p>
+                </div>
+                <div id="3" class="container">
+                    <p>Как дела?</p>
+                </div>
+                */
 
 </script>
 
@@ -179,39 +192,30 @@ let amountChats = 0;
 		<td width="80">
             <input id="moveUsersUp" type="button" name="up" value="Вверх" width="300" height="25" >
 			<div class="chatcontainer">
-
-                    <div class="chatuser">1</div>
-                    <div class="chatuser">2</div>
-                    <div class="chatuser">3</div>
-                    <div class="chatuser">4</div>
-                    <div class="chatuser">5</div>
-                    <div class="chatuser">6</div>
-                    <div class="chatuser">7</div>
-                    <div class="chatuser">8</div>
-                    <div class="chatuser">9</div>
-                    <div class="chatuser">10</div>
-
+                {% for name in talks %}
+                    <div class="chatuser">{{ name }}</div>
+                {% endfor %}
 			</div>
              <input id="moveUsersDown" type="button" name="up" value="Вниз" width="300" height="25" >
 		</td>
 
 		<td height="350">
-			<input id="moveMsgUp" type="button" name="up" value="Вверх" width="300" height="25" style="position: fixed; top: 131px;">
-            <div id="msgHolder">
-                <div id="0" class="container darker">
-                    <p>Кайф!</p>
+			<input id="moveMsgUp" type="button" name="up" value="Вверх" width="300" height="25" style="position: absolute; top: 131px;">
+            <div class="msgholder">
+                {%  for key,value in messages  %}
+                    {% if key == id_user %}
+                        <div id={{ key }} class="container darker">
+                            <p>{{ value }}</p>
+                        </div>
+                    {% else %}
+                        <div id={{ key }} class="container">
+                            <p>{{ value }}</p>
+                        </div>
+                    {% endif %}
                 </div>
-                <div id="1" class="container" >
-                    <p>Привет!</p>
-                </div>
-                <div id="2" class="container darker">
-                    <p>Привет!</p>
-                </div>
-                <div id="3" class="container">
-                    <p>Как дела?</p>
-                </div>
+                {% endfor %}
             </div>
-			<input id="moveMsgDown" type="button" name="down" value="Вниз" width="300" height="25" style="position: fixed; top:568px; ">
+			<input id="moveMsgDown" type="button" name="down" value="Вниз" width="300" height="25" style="position: absolute; top:568px; ">
 		</td>
 	</tr>
 	<tr>
