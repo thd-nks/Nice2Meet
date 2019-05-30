@@ -27,6 +27,13 @@ class DB:
         user.location = new_location
         user.save()
 
+    def update_profile(self, id, new_name, new_age, new_info):
+        user = User.get(User.id == id)
+        user.name = new_name
+        user.age = new_age
+        user.info = new_info
+        user.save()
+
     def get_likes(self, id_user):
         return LikedUser.select(LikedUser.idliker).where(LikedUser.idliked == id_user)
 
