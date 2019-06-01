@@ -1,9 +1,16 @@
 from models import *
+import datetime
 
 
 class DB:
     def __init__(self):
         pass
+    
+    def send_message(self, id_user, id_talk, msg):
+        id = db.get_chat(id_user, id_talk)
+        message = Message()
+        Message.create(idchat_id=id[0], idsender_id=id_user, text=msg,
+                       date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     def get_user(self, id_user):
         return User.get_by_id(id_user)
