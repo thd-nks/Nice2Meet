@@ -9,10 +9,8 @@ class QueueService:
 
     def form_queue(self, id_user):
         self.queue = []
-        #User.create(name="dasha", sex=False, age=23, rating=0, location='', info='student', picture='', login='asa', password='sa')
         couples = db.get_couples(id_user)
         [self.queue.append(sel) for sel in couples]
-        #[print(sel) for sel in couples]
 
     def likes_queue(self, id_user):
         self.queue = []

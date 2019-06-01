@@ -1,5 +1,5 @@
-from flask import render_template, request, redirect, url_for
-from app import app, socketio
+from flask import render_template, redirect, url_for, jsonify
+from app import app
 from authorization import LogForm, Authorization
 from registration import RegForm, Registration
 from profile_service import LocationForm, ProfileForm
@@ -11,14 +11,28 @@ from chat import ch
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
+    logout_user()
     return render_template('index.html')
 
 
-@app.route("/test", methods=['GET', 'POST'])
+@app.route("/chat", methods=['GET', 'POST'])
+@login_required
 def call():
-    msg = ch.get_messages(1, 5)
-    tlk = ch.get_talks(5)
-    return render_template('chat.html', messages=msg, talks=tlk, id_user='5', id_talk='1')
+    tlk = ch.get_talks(current_user.id)
+    return render_template('chat.html', talks=tlk, id_user=str(current_user.id))
+
+
+@app.route("/chat/<int:id>", methods=['GET', 'POST'])
+def get_msg(id):
+    msg = ch.get_messages(current_user.id, id)
+    return jsonify(msg, current_user.id)
+
+
+@app.route("/chat/<int:id_rec>/<string:msg>", methods=['POST'])
+def send_msg(id_rec, msg):
+    print(msg)
+    ch.send_message(current_user.id, id_rec, msg)
+    return "done"
 
 
 @app.route("/reg", methods=['GET', 'POST'])

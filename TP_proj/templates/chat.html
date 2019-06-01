@@ -10,27 +10,52 @@ Chat
 <script>
 let offset = 0;
 let amountChats = 0;
+let cur_id=0;
+let my_id=0;
+
+    $(document).ready(function () {
+        $('.chatuser').click(function (e) {
+                $(".container").remove();
+                cur_id = e.target.id;
+                $.ajax({
+                    'url' : '/chat/'+e.target.id,
+                    'type' : 'GET',
+                    'data' : {},
+                    'success': function (data) {
+                        data[0].forEach(function (item){
+                            my_id = data[1]
+                            if(item[0] == data[1].toString()){
+                                $(".msgholder").append(" <div id='" + item[0] + "' class='container darker'> <p>" + item[1] + "</p> </div>");
+                            }
+                            else $(".msgholder").append(" <div id='" + item[0] + "' class='container'> <p>" + item[1] + "</p> </div>");
+                        });
+                          offset = $( ".container" ).length;
+                          for(let i = offset-1; i>offset-6 && i >= 0;i--){
+                              $( ".container" ).get(i).style.display = "block";
+                          }
+                    }
+                });
+        });
+    });
 
     $(document).ready(function(){
              $('#moveMsgUp').click(function () {
-                 let divs =  $("div[id]");
+                 let divs =  $(".container");
                  if (offset-6>=0) {
                      divs.get(offset-6).style.display = "block";
                      divs.get(offset-1).style.display = "none";
                      offset -=1;
-                     console.log(offset);
                  }
             });
           });
 
     $(document).ready(function(){
              $('#moveMsgDown').click(function () {
-                 let divs =  $("div[id]");
+                 let divs =  $(".container");
                  if (offset+1<=divs.length) {
                      divs.get(offset).style.display = "block";
                      divs.get(offset-5).style.display = "none";
                      offset +=1;
-                     console.log(offset);
                  }
             });
           });
@@ -59,48 +84,30 @@ let amountChats = 0;
             });
           });
 
+    $(document).ready(function () {
+        $('#sendMsg').click(function () {
+            $.post( "/chat/"+ cur_id + "/" + $("#inputMsg").val() );
+            $(".msgholder").append(" <div id='" + my_id + "' class='container darker'> <p>" + $("#inputMsg").val() + "</p> </div>");
+            let divs =  $(".container");
+            console.log(divs);
+            if(offset>4) {
+                divs.get(offset).style.display = "block";
+                divs.get(offset - 5).style.display = "none";
+            }
+            else divs.get(offset).style.display = "block";
+            offset +=1;
+            $("#inputMsg").val('');
+        });
+    });
+
 
     $(document).ready(function(){
-      offset = $( "div[id]" ).length;
+      offset = $( ".container" ).length;
       amountChats = $(".chatuser").length;
-      console.log($(".chatuser").length);
-      for(let i = offset-1; i>offset-6;i--){
-          $( "div[id]" ).get(i).style.display = "block";
-      }
       for(let i=amountChats-1; i>amountChats-9 && i >= 0; i--){
               $(".chatuser").get(i).style.display = "inline-block";
           }
     });
-
-    /*
-			<div id="4" class="container darker">
-				<p>Хорошо.<br>А у тебя?</p>
-			</div>
-			<div id="5" class="container">
-				<p>Тоже хорошо!</p>
-			</div>
-            <div id="6" class="container darker">
-				<p>Супер!</p>
-			</div>
-            <div id="7" class="container">
-				<p>Пупер!</p>
-			</div>
-            <div id="8" class="container darker">
-				<p>Дупер!</p>
-			</div>
-			<div id="0" class="container darker">
-                    <p>Кайф!</p>
-                </div>
-                <div id="1" class="container" >
-                    <p>Привет!</p>
-                </div>
-                <div id="2" class="container darker">
-                    <p>Привет!</p>
-                </div>
-                <div id="3" class="container">
-                    <p>Как дела?</p>
-                </div>
-                */
 
 </script>
 
@@ -192,8 +199,8 @@ let amountChats = 0;
 		<td width="80">
             <input id="moveUsersUp" type="button" name="up" value="Вверх" width="300" height="25" >
 			<div class="chatcontainer">
-                {% for name in talks %}
-                    <div class="chatuser">{{ name }}</div>
+                {% for name,id in talks %}
+                    <div id="{{ id }}" class="chatuser">{{ name }}</div>
                 {% endfor %}
 			</div>
              <input id="moveUsersDown" type="button" name="up" value="Вниз" width="300" height="25" >
@@ -202,24 +209,12 @@ let amountChats = 0;
 		<td height="350">
 			<input id="moveMsgUp" type="button" name="up" value="Вверх" width="300" height="25" style="position: absolute; top: 131px;">
             <div class="msgholder">
-                {%  for key,value in messages  %}
-                    {% if key == id_user %}
-                        <div id={{ key }} class="container darker">
-                            <p>{{ value }}</p>
-                        </div>
-                    {% else %}
-                        <div id={{ key }} class="container">
-                            <p>{{ value }}</p>
-                        </div>
-                    {% endif %}
-                </div>
-                {% endfor %}
             </div>
 			<input id="moveMsgDown" type="button" name="down" value="Вниз" width="300" height="25" style="position: absolute; top:568px; ">
 		</td>
 	</tr>
 	<tr>
-		<td colspan="2"><p><input id="sendMsg" type="text" size="60" name=""><p><input type="submit" value="Отправить"></td>
+		<td colspan="2"><p><input id="inputMsg" type="text" size="60" name=""><p><input id="sendMsg" type="button" value="Отправить"></td>
 	</tr>
 
 </table>
