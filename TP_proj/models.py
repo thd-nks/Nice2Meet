@@ -45,7 +45,8 @@ class Message(Model):
 
 
 class Comment(Model):
-    iduser = ForeignKeyField(User, backref='user', primary_key=True)
+    idmarked = ForeignKeyField(User)
+    idcomment = ForeignKeyField(User)
     author = TextField()
     date = DateField()
     mark = IntegerField()
@@ -54,6 +55,7 @@ class Comment(Model):
     class Meta:
         db_table = 'comment'
         database = db
+        primary_key = CompositeKey('idmarked', 'idcomment')
 
 
 class LikedUser(Model):
@@ -78,12 +80,6 @@ class ViewedUser(Model):
 
 
 if __name__ == '__main__':
-    #db.connect()
-    #db.create_tables([User, Chat, Message, Comment, LikedUser, ViewedUser])
+    '''db.connect()
+    db.create_tables([User, Chat, Message, Comment, LikedUser, ViewedUser])'''
 
-    from authorization import Authorization
-    auth = Authorization()
-    p = 'l'
-    user = User(name="Сергей", sex=True, age=23, rating=0, location='', info='student', picture='', login='l')
-    auth.set_password(user, p)
-    user.save()

@@ -7,6 +7,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from models import User
 from db_service import db
 from chat import ch
+from comment_service import cs
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -34,6 +35,11 @@ def send_msg(id_rec, msg):
     ch.send_message(current_user.id, id_rec, msg)
     return "done"
 
+
+@app.route("/chat/<int:idcomment>/<int:mark>/<string:text>", methods=['POST'])
+def send_comment(idcomment, mark, text):
+    cs.send_comment(current_user.id, idcomment, current_user.name, mark, text)
+    return "done"
 
 @app.route("/reg", methods=['GET', 'POST'])
 def reg():

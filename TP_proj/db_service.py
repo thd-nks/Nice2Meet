@@ -1,4 +1,5 @@
 from models import *
+from peewee import fn
 import datetime
 
 
@@ -8,7 +9,6 @@ class DB:
     
     def send_message(self, id_user, id_talk, msg):
         id = db.get_chat(id_user, id_talk)
-        message = Message()
         Message.create(idchat_id=id[0], idsender_id=id_user, text=msg,
                        date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -62,6 +62,27 @@ class DB:
 
     def get_name(self, id):
         return User.get(User.id == id).name
+
+    def add_comment(self, id_user, id_comment, author, mark, text):
+        Comment.create(idmarked_id=id_user, idcomment_id=id_comment, author=author,
+                       date=datetime.datetime.now().strftime('%Y-%m-%d'),
+                       mark=mark, text=text)
+
+    def update_rating(self, id_user):
+        rating = Comment.select(Comment.mark).where(Comment.idcomment == id_user).count()
+        summ = Comment.select(Comment.mark).where(Comment.idcomment == id_user)
+        rate = sum([i.mark for i in summ])
+        user = self.get_user(id_user)
+        user.rating = rate/rating
+        user.save()
+
+    def delete_messages(self, id_user, id_del):
+        ch = self.get_chat(id_user, id_del)
+        Message.delete().where(((Message.idsender == id_user) | Message.idsender == id_del) & Message.idchat == ch)
+
+    def delete_chat(self, id_user, id_del):
+        Chat.delete().where(((Chat.id1 == id_user) & (Chat.id2 == id_del)) |
+                            ((Chat.id2 == id_user) & (Chat.id1 == id_del)))
 
     def update_user(self, id):
         pass
