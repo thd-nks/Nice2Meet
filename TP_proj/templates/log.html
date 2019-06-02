@@ -10,10 +10,10 @@
 
 <form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
-    <p>{{ form.login(size=28, placeholder='Логин') }}</p>
-    <p>{{ form.password(size=28, placeholder='Пароль') }}</p>
-    <p>{{ form.submit() }}</p>
+    <p align="center">{{ form.login(size=28, placeholder='Логин') }}</p>
+    <p align="center">{{ form.password(size=28, placeholder='Пароль') }}</p>
+    <p align="center">{{ form.submit() }}</p>
 </form>
-<p><a href="/reg"><button>Регистрация</button></a></p>
+<p align="center"><a href="/reg"><button>Регистрация</button></a></p>
 
 {% endblock %}

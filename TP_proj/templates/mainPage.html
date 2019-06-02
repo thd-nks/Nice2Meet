@@ -41,6 +41,8 @@
     width: 200px; /* Ширина первой колонки */
     background: white; /* Цвет фона первой колонки */
    }
+
+   a.button {display:block; height:100%; width:100%;}
 </style>
 
 
@@ -49,7 +51,7 @@
    <td id="col01"></td>
    <td id="col2">
 
-       <p>Hi, {{ current_user.name }}!</p>
+       <h2 align="center">Hi, {{ current_user.name }}!</h2>
 
            <form action="" method="post" novalidate>
             {{ form.hidden_tag() }}
@@ -63,7 +65,7 @@
 
 
        <p>
-           <a href="/reg"><button id="chbutt">Чаты</button></a>
+           <a href="/chat"><button id="chbutt">Чаты</button></a>
            <a href="/reg"><button>Оценившие</button></a>
            <a href="{{ url_for('logout') }}"><button id="logoutbutton">Выйти</button></a>
            <a href="/profile"><button id="profilebutton">Мой профиль</button></a>
@@ -72,13 +74,19 @@
         <!-- Внутренняя таблица -->
         <table cellpadding="5" cellspacing="0">
         <tr>
-        <td id="col1"></td>
-        <td id="col2">
-            <!-- Колонка для профиля пользователя -->
-            <p>Some text</p>
-            <p>Some text</p>
-        </td>
-        <td id="col3"></td>
+
+            <td id="col1">
+                <a href="/profile" class="button"></a>
+            </td>
+
+            <td id="col2">
+                <!-- Колонка для профиля пользователя -->
+                <p>Some text</p>
+                <p>Some text</p>
+            </td>
+            <td id="col3">
+                <a href="/profile" class="button"></a>
+            </td>
         </tr>
         </table>
 
