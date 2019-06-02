@@ -39,8 +39,19 @@ let my_id=0;
     });
 
     $(document).ready(function () {
-        $( "input[value='comment']" ).click(function () {
-            
+        $( "input[name*='comment']" ).click(function () {
+                $(".b-popup").show();
+        });
+    });
+
+    $(document).ready(function () {
+        $("#sendComment").click(function () {
+                var t = cur_id.toString();
+                $.post("/chat/" + cur_id + "/" + $("#sel option:selected").val() + "/" + $("#txtComment").val());
+                $("#txtComment").val("");
+                $(".container").remove();
+                $( ".chatuser[id='"+t+"']").remove();
+                $(".b-popup").hide();
         });
     });
 
@@ -114,6 +125,7 @@ let my_id=0;
 
 
     $(document).ready(function(){
+        $(".b-popup").hide();
       offset = $( ".container" ).length;
       amountChats = $(".chatuser").length;
       for(let i=amountChats-1; i>amountChats-9 && i >= 0; i--){
@@ -169,9 +181,39 @@ let my_id=0;
     margin-left: -1px;
 
 }
+.b-popup{
+    width:100%;
+    min-height:100%;
+    overflow:hidden;
+    position:fixed;
+    left: 200px;
+    top:0px;
+}
+.b-popup .b-popup-content{
+    margin:40px auto 0px auto;
+    width:300px;
+    height: 200px;
+    padding:10px;
+    border-radius:5px;
+    box-shadow: 0px 0px 10px #000;
+}
   </style>
 
 	<form>
+    <div class="b-popup">
+        <div class="b-popup-content">
+            Оставить комментарий<p></p>
+             <select id="sel">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select><p></p>
+            <input id="txtComment" type="text">
+            <input id="sendComment" type="button" value="Отправить">
+        </div>
+    </div>
 
 <table border="1" rules="all" cellspacing="0" width="50%" height="100%">
 	<tr>
@@ -185,7 +227,7 @@ let my_id=0;
                 {% for name,id in talks %}
                     <div id="{{ id }}" class="chatuser">
                         {{ name }}
-                        <input id="{{ id }}" type="button" width="15" height="15" style="float: right">
+                        <input id="{{ id }}" name="comment" type="button" width="15" height="15" style="float: right">
                     </div>
                 {% endfor %}
 			</div>
