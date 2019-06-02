@@ -38,6 +38,12 @@ let my_id=0;
         });
     });
 
+    $(document).ready(function () {
+        $( "input[value='comment']" ).click(function () {
+            
+        });
+    });
+
     $(document).ready(function(){
              $('#moveMsgUp').click(function () {
                  let divs =  $(".container");
@@ -57,6 +63,12 @@ let my_id=0;
                      divs.get(offset-5).style.display = "none";
                      offset +=1;
                  }
+            });
+          });
+
+    $(document).ready(function(){
+             $('#goBack').click(function () {
+                 window.location.href='/mainPage';
             });
           });
 
@@ -111,7 +123,6 @@ let my_id=0;
 
 </script>
 
-
 <style type="text/css">
     /* Chat containers */
 .container {
@@ -144,34 +155,6 @@ let my_id=0;
   display: table;
 }
 
-/* Style images */
-.container img {
-  float: left;
-  max-width: 60px;
-  width: 100%;
-  margin-right: 20px;
-  border-radius: 50%;
-}
-
-/* Style the right image */
-.container img.right {
-  float: right;
-  margin-left: 20px;
-  margin-right:0;
-}
-
-/* Style time text */
-.time-right {
-  float: right;
-  color: #aaa;
-}
-
-/* Style time text */
-.time-left {
-  float: bottom;
-  float: left;
-  color: #999;
-}
 .chatcontainer{
   /*max-height: 415px;*/
   height: 415px;
@@ -192,15 +175,18 @@ let my_id=0;
 
 <table border="1" rules="all" cellspacing="0" width="50%" height="100%">
 	<tr>
-    	<td colspan="3" width="100%" height="45px"><button>Назад</button></td>
+    	<td colspan="3" width="100%" height="45px"><input id="goBack" type="button" value="Назад" width="300" height="25" ></td>
   	</tr>
 
 	<tr>
 		<td width="80">
-            <input id="moveUsersUp" type="button" name="up" value="Вверх" width="300" height="25" >
+            <input id="moveUsersUp" type="button" name="comment" value="Вверх"  height="25" >
 			<div class="chatcontainer">
                 {% for name,id in talks %}
-                    <div id="{{ id }}" class="chatuser">{{ name }}</div>
+                    <div id="{{ id }}" class="chatuser">
+                        {{ name }}
+                        <input id="{{ id }}" type="button" width="15" height="15" style="float: right">
+                    </div>
                 {% endfor %}
 			</div>
              <input id="moveUsersDown" type="button" name="up" value="Вниз" width="300" height="25" >
