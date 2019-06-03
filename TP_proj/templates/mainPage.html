@@ -51,7 +51,7 @@
    <td id="col01"></td>
    <td id="col2">
 
-       <h2 align="center">Hi, {{ current_user.name }}!</h2>
+
 
            <form action="" method="post" novalidate>
             {{ form.hidden_tag() }}
@@ -77,7 +77,7 @@
 
             <td id="col1">
                 {% if user != None %}
-                    <a href="/n/{{ user.id }}" class="button"></a>
+                    <a href="/view/{{ user.id }}/0" class="button"></a>
                 {% endif %}
             </td>
 
@@ -130,7 +130,7 @@
             </td>
             <td id="col3">
                 {% if user != None %}
-                    <a href="/y/{{ user.id }}" class="button"></a>
+                    <a href="/view/{{ user.id }}/1" class="button"></a>
                 {% endif %}
             </td>
         </tr>

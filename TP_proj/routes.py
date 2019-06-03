@@ -8,7 +8,8 @@ from models import User
 from db_service import db
 from chat import ch
 from comment_service import cs
-from queue_service import queue_service, QueueService
+from queue_service import queue_service
+from request_handler import request
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -89,28 +90,11 @@ def main_page():
     return render_template('mainPage.html', form=form, user=user)
 
 
-@app.route("/y/<id>", methods=['GET', 'POST'])
+@app.route("/view/<id>/<is_liked>", methods=['GET', 'POST'])
 @login_required
-def say_yes(id):
-    if id is None:
-        return redirect(url_for('main_page'))
-    else:
-        db.add_viewed(current_user.id, id)
-        db.add_liked(current_user.id, id)
-        query = db.get_likes(current_user.id)
-        if query.exists():
-            db.add_chat(current_user.id, id)
-        return redirect(url_for('main_page'))
-
-
-@app.route("/n/<id>", methods=['GET', 'POST'])
-@login_required
-def say_no(id):
-    if id is None:
-        return redirect(url_for('main_page'))
-    else:
-        db.add_viewed(current_user.id, id)
-        return redirect(url_for('main_page'))
+def view(id, is_liked):
+    request.handle_request(is_liked, current_user.id, id)
+    return redirect(url_for('main_page'))
 
 
 @app.route("/profile", methods=['GET', 'POST'])
