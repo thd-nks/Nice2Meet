@@ -57,6 +57,12 @@ class DB:
     def add_viewed(self, id_viewer, id_viewed):
         ViewedUser.create(idviewer=id_viewer, idviewed=id_viewed)
 
+    def add_liked(self, id_liker, id_liked):
+        LikedUser.create(idliker=id_liker, idliked=id_liked)
+
+    def add_chat(self, id1, id2):
+        Chat.create(id1=id1, id2=id2)
+
     def get_talk(self, id_user):
         return Chat.select(Chat.id1, Chat.id2).where((Chat.id1 == id_user) | (Chat.id2 == id_user))
 

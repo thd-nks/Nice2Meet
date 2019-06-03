@@ -19,8 +19,8 @@ class QueueService:
 
     def get_from_queue(self):
         if len(self.queue) != 0:
-            return self.jsonify_user(self.queue.pop())
-        return jsonify(id=0)
+            return db.get_user(self.queue.pop().id)
+        return None
 
     def jsonify_user(self, id_user):
         user = db.get_user(id_user)

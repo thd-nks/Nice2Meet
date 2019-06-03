@@ -76,16 +76,62 @@
         <tr>
 
             <td id="col1">
-                <a href="/profile" class="button"></a>
+                {% if user != None %}
+                    <a href="/n/{{ user.id }}" class="button"></a>
+                {% endif %}
             </td>
 
             <td id="col2">
+
+                {% if user != None %}
                 <!-- Колонка для профиля пользователя -->
-                <p>Some text</p>
-                <p>Some text</p>
+                <table border="1" cellpadding="5" cellspacing="0">
+                <tr>
+  	                <td>
+     	                <table border="0" cellpadding="5" cellspacing="0">
+                            <tr>
+                                <td align="center">ФОТО</td>
+                                <td>
+                                    <table border="1" cellpadding="5" cellspacing="0">
+                                        <tr><td align="center">
+                                            {{ user.name }}
+                                        </td></tr>
+                                        <tr><td align="center">
+                                            {% if user.sex %}
+                                            Мужчина
+                                            {% endif %}
+                                            {% if user.sex == False %}
+                                            Женщина
+                                            {% endif %}
+                                        </td></tr>
+                                        <tr><td align="center">
+                                            {{ user.age }}
+                                        </td></tr>
+                                    </table>
+                                </td>
+                            </tr>
+      	                </table>
+                    </td>
+                </tr>
+                <tr>
+  	                <td height="200">
+                        {{ user.info }}
+                    </td>
+                </tr>
+                </table>
+                {% endif %}
+                {% if user == None %}
+                    <h1 align="center">Вам больше никто не подходит(</h1>
+                {% endif %}
+
+
+
+
             </td>
             <td id="col3">
-                <a href="/profile" class="button"></a>
+                {% if user != None %}
+                    <a href="/y/{{ user.id }}" class="button"></a>
+                {% endif %}
             </td>
         </tr>
         </table>

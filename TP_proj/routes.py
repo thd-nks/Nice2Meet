@@ -8,6 +8,7 @@ from models import User
 from db_service import db
 from chat import ch
 from comment_service import cs
+from queue_service import queue_service, QueueService
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -78,14 +79,42 @@ def log():
 @app.route("/mainPage", methods=['GET', 'POST'])
 @login_required
 def main_page():
+    queue_service.form_queue(id_user=current_user.id)
+    user = queue_service.get_from_queue()
+
     form = LocationForm()
     if form.validate_on_submit():
         db.update_location(current_user.id, form.location.data)
         return redirect(url_for('main_page'))
-    return render_template('mainPage.html', form=form)
+    return render_template('mainPage.html', form=form, user=user)
+
+
+@app.route("/y/<id>", methods=['GET', 'POST'])
+@login_required
+def say_yes(id):
+    if id is None:
+        return redirect(url_for('main_page'))
+    else:
+        db.add_viewed(current_user.id, id)
+        db.add_liked(current_user.id, id)
+        query = db.get_likes(current_user.id)
+        if query.exists():
+            db.add_chat(current_user.id, id)
+        return redirect(url_for('main_page'))
+
+
+@app.route("/n/<id>", methods=['GET', 'POST'])
+@login_required
+def say_no(id):
+    if id is None:
+        return redirect(url_for('main_page'))
+    else:
+        db.add_viewed(current_user.id, id)
+        return redirect(url_for('main_page'))
 
 
 @app.route("/profile", methods=['GET', 'POST'])
+@login_required
 def profile():
     form = ProfileForm()
     if form.validate_on_submit():
