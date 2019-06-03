@@ -84,11 +84,14 @@ class DB:
 
     def delete_messages(self, id_user, id_del):
         ch = self.get_chat(id_user, id_del)
-        Message.delete().where(((Message.idsender == id_user) | Message.idsender == id_del) & Message.idchat == ch)
+        query = Message.delete().where(((Message.idsender == id_user) | (Message.idsender == id_del))
+                                       & (Message.idchat == ch[0]))
+        query.execute()
 
     def delete_chat(self, id_user, id_del):
-        Chat.delete().where(((Chat.id1 == id_user) & (Chat.id2 == id_del)) |
-                            ((Chat.id2 == id_user) & (Chat.id1 == id_del)))
+        query = Chat.delete().where(((Chat.id1 == id_user) & (Chat.id2 == id_del)) |
+                                    ((Chat.id2 == id_user) & (Chat.id1 == id_del)))
+        query.execute()
 
     def update_user(self, id):
         pass
