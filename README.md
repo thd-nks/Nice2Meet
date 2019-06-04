@@ -8,3 +8,7 @@
 Trello: https://trello.com/b/7zGMdZGS/nice2meet
 
 Miro: https://realtimeboard.com/app/board/o9J_kxhyMVo=/
+
+Демонстрация приложения: https://www.youtube.com/watch?v=o7H2J-sPbPw
+
+Развернутое приложение: http://165.22.193.34:5000/
